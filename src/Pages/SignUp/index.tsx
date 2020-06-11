@@ -13,7 +13,7 @@ import {
   TextInput,
   Alert,
 } from 'react-native';
-
+import api from '../../service/api';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import getValidationsErros from '../../utils/getValidationsErros';
@@ -48,11 +48,7 @@ const SignUp: React.FC = () => {
       await schema.validate(data, {
         abortEarly: false,
       });
-      /* await signIn({
-        //  email: data.email,
-        //  password: data.password,
-        });
-      */
+      await api.post('/users', data);
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
         const errors = getValidationsErros(err);
@@ -61,7 +57,7 @@ const SignUp: React.FC = () => {
       }
       Alert.alert(
         'Erro na autenticação',
-        'Ocorreu um erro ao fazer login.Cheque as credenciais',
+        'Ocorreu um erro ao fazer cadastro.Cheque as credenciais',
       );
     }
   }, []);
